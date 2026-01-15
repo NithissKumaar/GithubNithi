@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Dashboard</title>
+    <title>Enhanced Dashboard</title>
 
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
+            transition: 0.3s;
         }
 
         header {
@@ -16,6 +17,11 @@
             color: white;
             padding: 15px;
             text-align: center;
+        }
+
+        #time {
+            font-size: 14px;
+            opacity: 0.9;
         }
 
         .dashboard {
@@ -33,6 +39,12 @@
         .sidebar p {
             margin: 15px 0;
             cursor: pointer;
+            padding: 5px;
+        }
+
+        .sidebar p.active {
+            background: #1abc9c;
+            border-radius: 5px;
         }
 
         .content {
@@ -77,8 +89,20 @@
             background: #2980b9;
         }
 
+        /* Dark mode */
         .dark {
             background-color: #1e1e1e;
+            color: white;
+        }
+
+        .dark header,
+        .dark .sidebar {
+            background: #121212;
+        }
+
+        .dark .card,
+        .dark .counter {
+            background: #2c2c2c;
             color: white;
         }
     </style>
@@ -87,38 +111,56 @@
 <body id="body">
 
 <header>
-    <h2>My Simple Dashboard</h2>
+    <h2>My Enhanced Dashboard</h2>
+    <div id="time"></div>
 </header>
 
 <div class="dashboard">
     <div class="sidebar">
-        <p>🏠 Home</p>
-        <p>📊 Analytics</p>
-        <p>⚙ Settings</p>
-        <button onclick="toggleTheme()">Dark Mode</button>
+        <p class="active" onclick="showSection('home', this)">🏠 Home</p>
+        <p onclick="showSection('analytics', this)">📊 Analytics</p>
+        <p onclick="showSection('settings', this)">⚙ Settings</p>
+        <button onclick="toggleTheme()">🌙 Dark Mode</button>
     </div>
 
     <div class="content">
-        <div class="cards">
-            <div class="card">
-                <h3>Users</h3>
-                <p>120</p>
+        <!-- HOME -->
+        <div id="home">
+            <div class="cards">
+                <div class="card">
+                    <h3>Users</h3>
+                    <p id="users">120</p>
+                </div>
+                <div class="card">
+                    <h3>Projects</h3>
+                    <p id="projects">15</p>
+                </div>
+                <div class="card">
+                    <h3>Tasks</h3>
+                    <p id="tasks">45</p>
+                </div>
             </div>
-            <div class="card">
-                <h3>Projects</h3>
-                <p>15</p>
-            </div>
-            <div class="card">
-                <h3>Tasks</h3>
-                <p>45</p>
+
+            <div class="counter">
+                <h3>Counter</h3>
+                <h2 id="count">0</h2>
+                <button onclick="increase()">+</button>
+                <button onclick="decrease()">-</button>
+                <button onclick="reset()">Reset</button>
             </div>
         </div>
 
-        <div class="counter">
-            <h3>Counter</h3>
-            <h2 id="count">0</h2>
-            <button onclick="increase()">+</button>
-            <button onclick="decrease()">-</button>
+        <!-- ANALYTICS -->
+        <div id="analytics" style="display:none;">
+            <h3>Analytics Section</h3>
+            <p>Users growth and project statistics will appear here.</p>
+            <button onclick="updateStats()">Update Stats</button>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="settings" style="display:none;">
+            <h3>Settings</h3>
+            <p>Theme and dashboard preferences.</p>
         </div>
     </div>
 </div>
@@ -132,15 +174,43 @@
     }
 
     function decrease() {
-        if (count > 0) {
-            count--;
-            document.getElementById("count").innerText = count;
-        }
+        if (count > 0) count--;
+        document.getElementById("count").innerText = count;
+    }
+
+    function reset() {
+        count = 0;
+        document.getElementById("count").innerText = count;
     }
 
     function toggleTheme() {
         document.getElementById("body").classList.toggle("dark");
     }
+
+    function showSection(section, element) {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("analytics").style.display = "none";
+        document.getElementById("settings").style.display = "none";
+
+        document.getElementById(section).style.display = "block";
+
+        document.querySelectorAll(".sidebar p").forEach(p => p.classList.remove("active"));
+        element.classList.add("active");
+    }
+
+    function updateStats() {
+        document.getElementById("users").innerText = Math.floor(Math.random() * 200);
+        document.getElementById("projects").innerText = Math.floor(Math.random() * 50);
+        document.getElementById("tasks").innerText = Math.floor(Math.random() * 100);
+    }
+
+    function updateTime() {
+        const now = new Date();
+        document.getElementById("time").innerText = now.toLocaleString();
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
 </script>
 
 </body>
