@@ -2,12 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple App</title>
+    <title>Simple Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .dashboard {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #34495e;
+            height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar p {
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .counter {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #3498db;
+            color: white;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .dark {
+            background-color: #1e1e1e;
+            color: white;
+        }
+    </style>
 </head>
-<body>
-    <h1>Hello, Git Deployment!</h1>
-    
-    //update2
+
+<body id="body">
+
+<header>
+    <h2>My Simple Dashboard</h2>
+</header>
+
+<div class="dashboard">
+    <div class="sidebar">
+        <p>🏠 Home</p>
+        <p>📊 Analytics</p>
+        <p>⚙ Settings</p>
+        <button onclick="toggleTheme()">Dark Mode</button>
+    </div>
+
+    <div class="content">
+        <div class="cards">
+            <div class="card">
+                <h3>Users</h3>
+                <p>120</p>
+            </div>
+            <div class="card">
+                <h3>Projects</h3>
+                <p>15</p>
+            </div>
+            <div class="card">
+                <h3>Tasks</h3>
+                <p>45</p>
+            </div>
+        </div>
+
+        <div class="counter">
+            <h3>Counter</h3>
+            <h2 id="count">0</h2>
+            <button onclick="increase()">+</button>
+            <button onclick="decrease()">-</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let count = 0;
+
+    function increase() {
+        count++;
+        document.getElementById("count").innerText = count;
+    }
+
+    function decrease() {
+        if (count > 0) {
+            count--;
+            document.getElementById("count").innerText = count;
+        }
+    }
+
+    function toggleTheme() {
+        document.getElementById("body").classList.toggle("dark");
+    }
+</script>
+
 </body>
 </html>
